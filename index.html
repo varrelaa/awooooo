@@ -1,161 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Happy Birthday Papa Ngoei Kimlun!</title>
-<style>
-:root{--bg1:#ffdee9;--bg2:#b5fffc}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;padding:0;min-height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;overflow:hidden;background:linear-gradient(135deg,var(--bg1),var(--bg2));font-family:Poppins,Arial,Helvetica}
-#topTitle{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:1.9rem;color:#fff;text-shadow:0 0 12px rgba(0,0,0,0.45);padding:6px 10px;border-radius:10px;z-index:100}
-#scene{display:flex;flex-direction:column;align-items:center;position:relative;width:100%;max-width:900px;padding-top:56px;z-index:50}
-.cake{width:200px;height:140px;position:relative;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;animation:float 3s ease-in-out infinite}
-.tier{width:170px;height:36px;border-radius:12px;position:absolute;left:50%;transform:translateX(-50%);box-shadow:inset 0 6px 10px rgba(0,0,0,0.08)}
-.bottom{background:#b56576;bottom:-6px;height:56px;width:200px;border-radius:16px}
-.middle{background:#ff8fa3;bottom:30px}
-.top{background:#ffd1c1;bottom:60px}
-.drip{position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:34px;border-radius:14px 14px 8px 8px;background:linear-gradient(180deg,#fff,#ffecec);box-shadow:0 6px 12px rgba(0,0,0,0.06)}
-.candle{width:12px;height:50px;border-radius:6px;background:#ffe066;position:absolute;top:-62px;left:50%;transform:translateX(-50%)}
-.flame{width:14px;height:20px;border-radius:50%;background:linear-gradient(180deg,#ffd24d,#ff8c00);position:absolute;top:-80px;left:50%;transform:translateX(-50%);animation:flicker .25s infinite alternate;box-shadow:0 0 14px rgba(255,180,0,0.9)}
-.hidden{display:none}
-.click-hint{margin-top:14px;font-size:1.05rem;color:#fff;text-shadow:0 0 8px rgba(0,0,0,0.45)}
-/* confetti/balloon styles */
-.confetti{position:fixed;width:10px;height:10px;border-radius:2px;z-index:90;pointer-events:none;will-change:transform,opacity}
-.balloon{width:36px;height:48px;border-radius:50% 50% 45% 45%;position:fixed;bottom:-80px;z-index:80;pointer-events:none;will-change:transform,opacity}
-.balloon::after{content:"";position:absolute;left:50%;top:54px;width:2px;height:40px;background:rgba(255,255,255,0.6);transform:translateX(-50%)}
-/* simple animations */
-@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(360deg);opacity:0}}
-@keyframes fly{0%{transform:translateY(0) translateX(0);opacity:1}100%{transform:translateY(-120vh) translateX(30px);opacity:0}}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
-@keyframes flicker{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.12)}}
-/* fireworks (visual burst using radial confetti) handled by JS creating many .confetti elements */
-/* responsive tweaks */
-@media (max-width:420px){#topTitle{font-size:1.4rem;top:8px} .cake{width:170px;height:120px} .drip{width:140px;height:30px} .balloon{width:30px;height:40px}}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Papa Ngoei Kimlun!</title>
+  <style>
+    :root{--bg1:#ffdee9;--bg2:#b5fffc}
+    *{box-sizing:border-box}
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    h1#topTitle {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.4rem;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(0,0,0,0.5);
+      animation: glow 2s infinite alternate;
+      z-index: 40;
+      margin: 0;
+      padding: 0 12px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 12px;
+    }
+
+    #scene {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 30;
+      width: 100%;
+      max-width: 900px;
+      padding-top: 60px;
+    }
+
+    /* Cake (3D-like with CSS) */
+    .cake {
+      perspective: 800px;
+      transform-style: preserve-3d;
+      transform: rotateX(18deg);
+
+      width: 260px;
+      height: 180px;
+      position: relative;
+      margin-top: 8px;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+      z-index: 35;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+    }
+
+    /* layers */
+    .cake .tier {
+      width: 220px;
+      height: 46px;
+      border-radius: 14px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 6px 10px rgba(0,0,0,0.08);
+      transform-origin: center center;
+      backface-visibility: hidden;
+    }
+    .tier.bottom{ background:#b56576; bottom: -6px; height:64px; width:260px; border-radius:18px }
+    .tier.middle{ background:#ff8fa3; bottom: 38px }
+    .tier.top{ background:#ffd1c1; bottom: 78px }
+
+    /* frosting drip */
+    .drip{
+      position:absolute;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:240px;
+      height:40px;
+      background:linear-gradient(180deg,#fff,#ffecec);
+      border-radius:18px 18px 10px 10px;
+      z-index:36;
+      box-shadow:0 6px 12px rgba(0,0,0,0.08);
+    }
+
+    /* candle */
+    .candle{
+      width:16px;height:60px;border-radius:6px;background:#ffe066;position:absolute;top:-72px;left:50%;transform:translateX(-50%);z-index:37;box-shadow:inset 0 4px 8px rgba(0,0,0,0.08)
+    }
+    .flame{
+      width:18px;height:26px;border-radius:50%;background:linear-gradient(180deg,#ffd24d,#ff8c00);position:absolute;top:-94px;left:50%;transform:translateX(-50%);animation:flicker .25s infinite alternate;box-shadow:0 0 18px rgba(255,180,0,0.9);z-index:38
+    }
+
+    .hidden{display:none}
+
+    /* confetti */
+    .confetti{width:10px;height:10px;position:fixed;top:-10px;animation:fall linear infinite;border-radius:2px}
+
+    @keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(120vh) rotate(360deg);opacity:0}}
+    @keyframes glow{0%{text-shadow:0 0 10px #ffd;}100%{text-shadow:0 0 28px #ffb}}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+    @keyframes flicker{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.15)}}
+
+    /* balloons */
+    .balloon{width:40px;height:55px;border-radius:50% 50% 45% 45%;position:fixed;bottom:-80px;animation:fly linear forwards;z-index:28}
+    .balloon::after{content:"";position:absolute;left:50%;top:54px;width:2px;height:40px;background:rgba(255,255,255,0.6);transform:translateX(-50%)}
+    @keyframes fly{0%{transform:translateY(0) translateX(0);opacity:1}100%{transform:translateY(-120vh) translateX(30px);opacity:0}}
+
+    /* fireworks canvas sits behind UI */
+    #fireworksCanvas{position:fixed;left:0;top:0;z-index:5;pointer-events:none}
+
+    /* gift boxes */
+    .gift{
+      width:40px;height:40px;position:fixed;bottom:-60px;z-index:26;
+      background:linear-gradient(135deg,#ff7f7f,#ff3d3d);
+      border-radius:6px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.2);
+      animation:giftFloat linear forwards;
+    }
+    .gift::after{
+      content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:8px;height:40px;background:rgba(255,255,255,0.7);
+    }
+    @keyframes giftFloat{0%{transform:translateY(0)}100%{transform:translateY(-120vh)}}
+
+    /* responsiveness */
+    @media (max-width:420px){
+      .cake{transform:scale(.8)}
+      h1#topTitle{font-size:1.6rem}
+    }
+    .click-hint{
+      position:absolute;
+      top:120px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:1.4rem;
+      color:#fff;
+      text-shadow:0 0 10px rgba(0,0,0,0.5);
+      animation:bounce 1.2s infinite;
+      z-index:45;
+    }
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
 </style>
 </head>
 <body>
+
 <h1 id="topTitle">Happy Birthday Papa Ngoei Kimlun! 🎉</h1>
+
 <div id="scene">
-  <div class="cake" id="cake" role="button" aria-label="Birthday cake, klik untuk meniup lilin">
+  <!-- removed the near-cake text as requested -->
+  <div class="cake" id="cake" aria-label="Birthday cake">
     <div class="drip"></div>
     <div class="tier bottom"></div>
     <div class="tier middle"></div>
     <div class="tier top"></div>
-    <div class="candle" aria-hidden="true"></div>
-    <div class="flame" id="flame" aria-hidden="true"></div>
-  </div>
-  <div class="click-hint">Klik kue untuk meniup lilin 🎂</div>
+    <div class="candle" id="candle" aria-hidden="true"></div>
+    <div class="flame" id="flame" aria-hidden="true">  
 </div>
-<audio id="birthdaySong" src="jamrud.mp3" loop muted></audio>
+</div>
+</div>
+
+<!-- main script: wrapped in DOMContentLoaded to be safe -->
 <script>
-// Utility to create and animate confetti pieces (no external lib required)
-function createConfettiPiece(opts){
-  const el = document.createElement('div');
-  el.className = 'confetti';
-  const size = opts.size || (6 + Math.random()*10);
-  el.style.width = size + 'px';
-  el.style.height = size + 'px';
-  el.style.left = (opts.left || (Math.random()*100)) + 'vw';
-  el.style.top = (opts.top || '-10vh');
-  el.style.background = opts.color || `hsl(${Math.floor(Math.random()*360)},70%,60%)`;
-  el.style.transform = `rotate(${Math.random()*360}deg)`;
-  el.style.animation = `fall ${(opts.duration||2+Math.random()*2).toFixed(2)}s linear forwards`;
-  document.body.appendChild(el);
-  setTimeout(()=> el.remove(), (opts.removeAfter || 4000));
-}
+  document.addEventListener('DOMContentLoaded', () => {
+    // start effects
+    startConfetti();
+    spawnGifts();
+    window.setInterval(spawnGifts, 2600);
+    spawnBalloons();
+    window.setInterval(spawnBalloons, 2200);
+    window.setInterval(startConfetti, 1500);
 
-function launchConfetti(){
-  const duration = 20000; // extended to 20s // ms
-  const bursts = 20;
-  for(let b=0;b<bursts;b++){
-    setTimeout(()=>{
-      const count = 18 + Math.floor(Math.random()*30);
-      for(let i=0;i<count;i++){
-        createConfettiPiece({left: (20 + Math.random()*60), top: '-5vh', duration:2 + Math.random()*2, removeAfter:4000});
-      }
-    }, b*150);
-  }
-}
-
-// Balloons: create floating balloons that rise and then are removed
-function releaseBalloons(){
-  const total = 36;
-  for(let i=0;i<total;i++){
-    const b = document.createElement('div');
-    b.className = 'balloon';
-    b.style.left = Math.random()*90 + 'vw';
-    b.style.background = `linear-gradient(180deg, ${randomColor()}, ${randomColor(0.6)})`;
-    const dur = (6 + Math.random()*6).toFixed(2) + 's';
-    b.style.animation = `fly ${dur} linear forwards`;
-    b.style.opacity = '0.98';
-    document.body.appendChild(b);
-    setTimeout(()=> b.remove(), (parseFloat(dur)*1000)+500);
-  }
-}
-
-function randomColor(alpha){
-  const h = Math.floor(Math.random()*360);
-  const s = 70;
-  const l = 60;
-  if(alpha) return `hsla(${h},${s}%,${l}%,${alpha})`;
-  return `hsl(${h},${s}%,${l}%)`;
-}
-
-// Fireworks simulated by radial confetti bursts from random points near top
-function fireworks(){
-  const bursts = 12;
-  for(let i=0;i<bursts;i++){
-    setTimeout(()=>{
-      const originX = 10 + Math.random()*80; // vw
-      const pieces = 60 + Math.floor(Math.random()*80);
-      for(let p=0;p<pieces;p++){
-        // create piece with varying left and a stronger upward motion (achieved by smaller duration)
-        createConfettiPiece({left: originX + (Math.random()*6-3), top: '-5vh', duration: 1.2 + Math.random()*0.8, removeAfter:1600});
-      }
-    }, i*300);
-  }
-}
-
-// audio handling: start on first user interaction to avoid browser blocks
-function enableAudioOnFirstInteraction(){
-  const audio = document.getElementById('birthdaySong');
-  const unlock = ()=>{
-    audio.muted = false;
-    audio.play().catch(()=>{});
-    document.removeEventListener('click', unlock);
-    document.removeEventListener('touchstart', unlock);
-  };
-  document.addEventListener('click', unlock, {once:true});
-  document.addEventListener('touchstart', unlock, {once:true});
-}
-
-// Hook up cake interaction
-document.addEventListener('DOMContentLoaded', ()=>{
-  const cake = document.getElementById('cake');
-  const flame = document.getElementById('flame');
-  enableAudioOnFirstInteraction();
-  cake.addEventListener('click', ()=>{
-    const isHidden = flame.classList.toggle('hidden');
-    if(isHidden){
-      // when flame is turned off -> celebration
-      const audio = document.getElementById('birthdaySong');
-audio.muted = false;
-audio.currentTime = 15;
-audio.play();
-launchConfetti();
-      releaseBalloons();
-      fireworks();
-      // small accessibility announcement
-      setTimeout(()=>{
-        try{window.speechSynthesis.cancel();}catch(e){}
-        const msg = new SpeechSynthesisUtterance('Selamat ulang tahun!');
-        window.speechSynthesis.speak(msg);
-      },300);
-    }
+    // cake click toggles flame (blow/relight)
+    const cake = document.getElementById('cake');
+    const flame = document.getElementById('flame');
+    cake.addEventListener('click', () => {
+      flame.classList.toggle('hidden');
+      <audio id="birthdaySong" src="jamrud.mp3" loop muted></audio>
+    });
   });
-});
+
+  function spawnBalloons(){
+    for(let i=0;i<8;i++){
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      b.style.left = Math.random()*90 + 'vw';
+      b.style.background = randomColor();
+      const dur = (6 + Math.random()*6).toFixed(2) + 's';
+      b.style.animationDuration = dur;
+      b.style.transform = `translateX(${(Math.random()*40-20).toFixed(2)}px)`;
+      document.body.appendChild(b);
+      setTimeout(()=> b.remove(), (parseFloat(dur)*1000)+500);
+    }
+  }
+
+  function startConfetti(){
+    for(let i=0;i<18;i++){
+      const conf = document.createElement('div');
+      conf.className = 'confetti';
+      conf.style.left = Math.random()*100 + 'vw';
+      conf.style.background = randomColor();
+      conf.style.animationDuration = (1.6 + Math.random()*2.6).toFixed(2) + 's';
+      document.body.appendChild(conf);
+      setTimeout(()=> conf.remove(), 5000);
+    }
+  }
+
+  function spawnGifts(){
+    for(let i=0;i<3;i++){
+      const g=document.createElement('div');
+      g.className='gift';
+      g.style.left=Math.random()*90+'vw';
+      const dur=(5+Math.random()*4).toFixed(2)+'s';
+      g.style.animationDuration=dur;
+      document.body.appendChild(g);
+      setTimeout(()=>g.remove(),(parseFloat(dur)*1000)+500);
+    }
+  }
+
+  function randomColor(){
+    const colors = ['#ff4757','#1e90ff','#2ed573','#ffa502','#eccc68','#ff6b81','#7bed9f','#8e44ad','#00cec9'];
+    return colors[Math.floor(Math.random()*colors.length)];
+  }
+</script>
+
+<audio id="birthdaySong" src="ulangtahun.mp3" autoplay loop></audio>
+
+<canvas id="fireworksCanvas"></canvas>
+<script>
+// Fireworks (keeps running)
+const fwCanvas=document.getElementById('fireworksCanvas');
+const ctx=fwCanvas.getContext('2d');
+function resizeFW(){fwCanvas.width=window.innerWidth;fwCanvas.height=window.innerHeight;}resizeFW();window.onresize=resizeFW;
+let particles=[];
+function firework(){
+  const x = Math.random()*fwCanvas.width;
+  const y = Math.random()*fwCanvas.height*0.4;
+  for(let i=0;i<60;i++){
+    particles.push({x,y,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,life:60,color:randomColor()});
+  }
+}
+setInterval(firework,1200);
+function renderFW(){
+  ctx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+  for(let i=particles.length-1;i>=0;i--){
+    const p = particles[i];
+    const vx = Math.cos(p.angle)*p.speed;
+    const vy = Math.sin(p.angle)*p.speed;
+    p.x += vx; p.y += vy; p.life--;
+    ctx.fillStyle = p.color; ctx.fillRect(p.x,p.y,3,3);
+    if(p.life<=0) particles.splice(i,1);
+  }
+  requestAnimationFrame(renderFW);
+}
+renderFW();
 </script>
 </body>
 </html>
