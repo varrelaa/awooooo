@@ -178,13 +178,37 @@
   const flame = document.getElementById('flame');
   enableAudioOnFirstInteraction();
 
-  // ALWAYS ON EFFECTS
+  // GLOBAL EFFECT STATE
+let effectsRunning = true;
+function stopAllEffects(){
+  document.querySelectorAll('.confetti').forEach(e=>e.remove());
+  document.querySelectorAll('.balloon').forEach(e=>e.remove());
+  document.querySelectorAll('.firework').forEach(e=>e.remove());
+}
+
+// ALWAYS ON EFFECTS
   setInterval(launchConfetti, 2500);
   setInterval(releaseBalloons, 4000);
   setInterval(fireworks, 5000);
 
   cake.addEventListener('click', ()=>{
+    const audio = document.getElementById('birthdaySong');
     const isHidden = flame.classList.toggle('hidden');
+
+    if(isHidden){
+      // FIRST CLICK → START ALL EFFECTS
+      audio.muted = false;
+      audio.currentTime = 15;
+      audio.play();
+      effectsRunning = true;
+    } else {
+      // SECOND CLICK → STOP ALL EFFECTS
+      audio.pause();
+      audio.currentTime = 0;
+      effectsRunning = false;
+      stopAllEffects();
+    }
+});
     if(isHidden){
       const audio = document.getElementById('birthdaySong');
       audio.muted = false;
