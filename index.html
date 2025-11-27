@@ -187,6 +187,9 @@
     const flame = document.getElementById('flame');
     cake.addEventListener('click', () => {
       flame.classList.toggle('hidden');
+      const song = document.getElementById('birthdaySong');
+      if(song) song.play();
+    });
     });
   });
 
@@ -234,7 +237,7 @@
   }
 </script>
 
-<audio id="birthdaySong" src="jamrud.mp3" loop muted></audio>
+<audio id="birthdaySong" src="ulangtahun.mp3" autoplay loop></audio>
 
 <canvas id="fireworksCanvas"></canvas>
 <script>
@@ -267,4 +270,3 @@ renderFW();
 </script>
 </body>
 </html>
-
