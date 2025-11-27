@@ -67,7 +67,7 @@ function createConfettiPiece(opts){
 }
 
 function launchConfetti(){
-  const duration = 20000; // extended to 20s // ms
+  const duration = 10000000; // extended to 20s // ms
   const bursts = 20;
   for(let b=0;b<bursts;b++){
     setTimeout(()=>{
@@ -82,6 +82,7 @@ function launchConfetti(){
 // Balloons: create floating balloons that rise and then are removed
 function releaseBalloons(){
   const total =20;
+  const duration = 10000000;
   for(let i=0;i<total;i++){
     const b = document.createElement('div');
     b.className = 'balloon';
@@ -106,6 +107,7 @@ function randomColor(alpha){
 // Fireworks simulated by radial confetti bursts from random points near top
 function fireworks(){
   const bursts = 12;
+  const duration = 10000000;
   for(let i=0;i<bursts;i++){
     setTimeout(()=>{
       const originX = 10 + Math.random()*80; // vw
@@ -159,3 +161,4 @@ launchConfetti();
 </script>
 </body>
 </html>
+
