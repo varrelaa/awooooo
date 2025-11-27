@@ -185,8 +185,10 @@
     // cake click toggles flame (blow/relight)
     const cake = document.getElementById('cake');
     const flame = document.getElementById('flame');
+    const song = document.getElementById("birthdaySong");
     cake.addEventListener('click', () => {
       flame.classList.toggle('hidden');
+      song.play().catch(err => console.log("Audio blocked:", err));
       const song = document.getElementById('birthdaySong');
       if(song) song.play();
     });
@@ -270,4 +272,5 @@ renderFW();
 </script>
 </body>
 </html>
+
 
